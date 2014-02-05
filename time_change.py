@@ -3,7 +3,12 @@ cities = {'New York':-5,'San Francisco':-8,'PortlandOR':-8,'PortlandME':-5,'Lond
 from time import time, gmtime, strftime
 
 def Time_Change(location):
-	Time = str(int(strftime('%H', gmtime())) + cities[location]) + ':' + strftime('%M', gmtime())
+	hour = int(strftime('%H', gmtime()) + cities[location]
+	if hour <= 0:
+		hour = hour + 24
+	else:
+		hour = hour
+	Time = str(hour) + ':' + strftime('%M', gmtime())
 	return Time
 	
 location = raw_input("What city are you in? ")
