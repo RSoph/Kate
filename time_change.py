@@ -5,9 +5,7 @@ from time import time, gmtime, strftime
 def Time_Change(location):
 	hour = int(strftime('%H', gmtime()) + cities[location]
 	if hour <= 0:
-		hour = hour + 24
-	else:
-		hour = hour
+		hour += 24
 	Time = str(hour) + ':' + strftime('%M', gmtime())
 	return Time
 	
