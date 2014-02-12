@@ -1,0 +1,301 @@
+def display_board()
+# This method will be called after every turn, so
+# the players can watch the game progress
+	puts "___"										 
+	puts $squares[0] + $squares[1] + $squares[2]    
+	puts $squares[3] + $squares[4] + $squares[5]
+	puts $squares[6] + $squares[7] + $squares[8]
+	puts "___"
+end
+
+def turn(a)
+# This method governs human players' turns. 
+# As long as the player has entered a valid move, the
+# appropriate value in the array gets redefined to X or O.
+# If the player enters anything other than a valid move, the method calls
+# itself again so the player can have another try.
+	puts "Where would you like to place an #{a}?"
+	move = gets.chomp.to_i
+		if $squares[move - 1] == "X" || $squares[move - 1] == "O"
+			puts "Sorry, that square has already been used!"
+			turn(a)
+		elsif move.to_i > 0 && move.to_i < 10
+			$squares[move - 1] = "#{a}"
+		else
+			puts "Please enter a number from 1 to 9!"
+			turn(a)
+		end
+end
+
+def c_turn()
+#The computer player generates a random number from 1 to 9,
+#checks if that square has been used, and if not, reassignes the appropriate variable
+#It would be better, of course, to teach the computer tictactoe strategy, so it
+#wasn't just making random moves. Project for further development.
+	move = rand(9)
+	if $squares[move - 1] == "X" || $squares[move - 1] == "O"
+		c_turn
+	else
+		$squares[move - 1] = "O"
+	end
+end
+
+def check_winner_one()
+#There are 8 different ways to win, this method checks for each of them.
+#It will be called after every turn once a winner is possible. (no winner is possible during the 
+#first 4 moves)
+#If this method does find a winner, it assigns the variable $winner to "True". The method one_player_game
+#will stop as soon as this happens, ending the game.
+	$counter += 1
+	if $squares[0] == $squares[1] && $squares[1] == $squares[2]
+		if $squares[0] == "X"
+			puts "Congratulations #{$name1}, you win!"
+			$winner = "True"
+		elsif $squares[0] == "O"								
+			puts "Sorry, you lose!"								
+			$winner = "True"									
+		end						   							
+	elsif $squares[3] == $squares[4] && $squares[4] == $squares[5]
+		if $squares[3] == "X"					   		
+			puts "Congratulations #{$name1}, you win!"
+			$winner = "True"
+		elsif $squares[3] == "O"
+			puts "Sorry, you lose!"
+			$winner = "True"
+		end
+	elsif $squares[6] == $squares[7] && $squares[7] == $squares[8]
+		if $squares[6] == "X"
+			puts "Congratulations #{$name1}, you win!"
+			$winner = "True"
+		elsif $squares[6] == "O"
+			puts "Sorry, you lose!"
+			$winner = "True"
+		end
+	elsif $squares[0] == $squares[3] && $squares[3] == $squares[6]
+		if $squares[0] == "X"					   
+			puts "Congratulations #{$name1}, you win!"   			
+			$winner = "True"										
+		elsif $squares[0] == "O"									
+			puts "Sorry, you lose!"				  					
+			$winner = "True"
+		end											  				
+	elsif $squares[1] == $squares[4] && $squares[4] == $squares[7]					   
+		if $squares[1] == "X"
+			puts "Congratulations #{$name1}, you win!"
+			$winner = "True"
+		elsif $squares[1] == "O"
+			puts "Sorry, you lose!"	
+			$winner = "True"
+		end	
+	elsif $squares[2] == $squares[5] && $squares[5] == $squares[8]					   
+		if $squares[2] == "X"
+			puts "Congratulations #{$name1}, you win!"
+			$winner = "True"
+		elsif $squares[2] == "O"
+			puts "Sorry, you lose!"
+			$winner = "True"
+		end
+	elsif $squares[0] == $squares[4] && $squares[4] == $squares[8]					   
+		if $squares[0] == "X"
+			puts "Congratulations #{$name1}, you win!"
+			$winner = "True"
+		elsif $squares[0] == "O"
+			puts "Sorry, you lose!"
+			$winner = "True"
+		end
+	elsif $squares[2] == $squares[4] && $squares[4] == $squares[6]
+		if $squares[2] == "X"
+			puts "Congratulations #{$name1}, you win!"
+			$winner = "True"
+		elsif $squares[2] == "O"
+			puts "Sorry, you lose!"
+			$winner = "True"
+		end
+#on the 5th time that this method is called (after the 9th move), if it still does not find a winner
+#it will declare the game a draw
+	elsif $counter == 5						   						
+		puts "This game is a draw."									
+	end
+end
+
+def check_winner_two()
+# This is functionally the same as check_winner_one, the only real difference is the dialogue 
+	$counter += 1
+	if $squares[0] == $squares[1] && $squares[1] == $squares[2]
+		if $squares[0] == "X"										
+			puts "Congratulations #{$namex}, you win!"
+			$winner = "True"
+		elsif $squares[0] == "O"									
+			puts "Congratulations #{$nameo}, you win!"
+			$winner = "True"
+		end										
+	elsif $squares[3] == $squares[4] && $squares[4] == $squares[5]	
+		if $squares[3] == "X"
+			puts "Congratulations #{$namex}, you win!"
+			$winner = "True"
+		elsif $squares[3] == "O"
+			puts "Congratulations #{$nameo}, you win!"
+			$winner = "True"
+		end  				
+	elsif $squares[6] == $squares[7] && $squares[7] == $squares[8]
+		if $squares[6] == "X"
+			puts "Congratulations #{$namex}, you win!"
+			$winner = "True"
+		elsif $squares[6] == "O"
+			puts "Congratulations #{$nameo}, you win!"
+			$winner = "True"
+		end   
+	elsif $squares[0] == $squares[3] && $squares[3] == $squares[6]					   
+		if $squares[0] == "X"
+			puts "Congratulations #{$namex}, you win!"
+			$winner = "True"
+		elsif $squares[0] == "O"
+			puts "Congratulations #{$nameo}, you win!"
+			$winner = "True"
+		end
+	elsif $squares[1] == $squares[4] && $squares[4] == $squares[7] 
+		if $squares[1] == "X"
+			puts "Congratulations #{$namex}, you win!"
+			$winner = "True"
+		elsif $squares[1] == "O"
+			puts "Congratulations #{$nameo}, you win!"
+			$winner = "True"
+		end  				
+	elsif $squares[2] == $squares[5] && $squares[5] == $squares[8]	
+		if $squares[2] == "X"
+			puts "Congratulations #{$namex}, you win!"
+			$winner = "True"
+		elsif $squares[2] == "O"
+			puts "Congratulations #{$nameo}, you win!"
+			$winner = "True"
+		end  		
+	elsif $squares[0] == $squares[4] && $squares[4] == $squares[8]					   
+		if $squares[0] == "X"
+			puts "Congratulations #{$namex}, you win!"
+			$winner = "True"
+		elsif $squares[0] == "O"
+			puts "Congratulations #{$nameo}, you win!"
+			$winner = "True"
+		end  		
+	elsif $squares[2] == $squares[4] && $squares[4] == $squares[6]
+		if $squares[2] == "X"
+			puts "Congratulations #{$namex}, you win!"
+			$winner = "True"
+		elsif $squares[2] == "O"
+			puts "Congratulations #{$nameo}, you win!"
+			$winner = "True"
+		end  		
+	elsif $counter == 5
+		puts "This game is a draw."
+	end
+end
+
+def one_player_game()
+# This is the sequence of methods that need to be called to run a game against the computer.
+# It is important to define the array (the original state of the playing board), 
+# and the counter used by the check_winner methods here, so they can be reset every time
+# a new game is started.
+	$squares = Array["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+	$counter = 0
+	$winner = "False"
+	display_board()
+	turn("X")
+	display_board()
+	c_turn()
+	display_board()
+	turn("X")
+	display_board()
+	c_turn()
+	display_board()
+	turn("X")
+	display_board()
+	check_winner_one()
+	unless $winner == "True"
+		c_turn()
+		display_board()
+		check_winner_one()
+		unless $winner == "True"
+			turn("X")
+			display_board()
+			check_winner_one()
+			unless $winner == "True"
+				c_turn()
+				display_board()
+				check_winner_one()
+				unless $winner == "True"
+					turn("X")
+					display_board()
+					check_winner_one()
+				end
+			end
+		end
+	end
+	puts "Would you like to play again? Enter Y or N."
+	if gets.chomp.downcase == "y"
+		one_player_game()
+	else
+		puts "Bye!"
+	end
+end
+
+def two_player_game()
+# This is the sequence of methods that need to be called to run a game between two human players.
+# It is important to define the array (the original state of the playing board), 
+# and the counter used by the check_winner methods here, so they can be reset every time
+# a new game is started.
+	$squares = Array["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+	$counter = 0
+	$winner = "False"
+	display_board()
+	turn("X")
+	display_board()
+	turn("O")
+	display_board()
+	turn("X")
+	display_board()
+	turn("O")
+	display_board()
+	turn("X")
+	display_board()
+	check_winner_two()
+	unless $winner == "True"
+		turn("O")
+		display_board()
+		check_winner_two()
+		unless $winner == "True"
+			turn("X")
+			display_board()
+			check_winner_two()
+			unless $winner == "True"
+				turn("O")
+				display_board()
+				check_winner_two()
+				unless $winner == "True"
+					turn("X")
+					display_board()
+					check_winner_two()
+				end
+			end
+		end
+	end
+	puts "Would you like to play again? Enter Y or N"
+	if gets.chomp.downcase == "y"
+		two_player_game()
+	else
+		puts "Bye!"
+	end
+end
+
+puts "Do you want to play a 1 player or 2 player game?"
+	players = gets.chomp.to_s
+	if players == "1"
+		puts "What is your name?"
+		$name1 = gets.chomp
+		one_player_game()
+	elsif players == "2"
+		puts "Player X, what is your name?"
+		$namex = gets.chomp
+		puts "Player O, what is your name?"
+		$nameo = gets.chomp
+		two_player_game()
+	end
